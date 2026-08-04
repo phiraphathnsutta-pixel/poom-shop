@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALICE BEAUTY | เครื่องสำอางสุดหวานระดับพรีเมียม</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Shantell+Sans:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sweet-pink: #ffb7c5;
+            --soft-pink: #fff0f5;
+            --pastel-purple: #e6e6fa;
+            --deep-plum: #5c3a58;
+            --accent-purple: #9b6b9e;
+            --rose-gold: #e8a7a1;
+            --card-bg: #ffffff;
+            --text-dark: #4a3b4c;
+            --text-muted: #8c7a8e;
+            --radius-soft: 24px;
+            --radius-pill: 50px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        body {
+            background-color: var(--soft-pink);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #ffc0cb, #e6e6fa);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 8px 25px rgba(232, 167, 161, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #ffffff;
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Shantell Sans', cursive;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--deep-plum);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: #d87093;
+            font-style: italic;
+        }
+
+        .cart-badge {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 0.6rem 1.4rem;
+            border-radius: var(--radius-pill);
+            border: 2px solid #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: var(--deep-plum);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .cart-count {
+            background: var(--deep-plum);
+            color: #fff;
+            font-weight: 500;
+            padding: 2px 10px;
+            border-radius: var(--radius-pill);
+            font-size: 0.9rem;
+        }
+
+        /* Container & Page Switch */
+        .container {
+            max-width: 1100px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title h1 {
+            font-family: 'Shantell Sans', cursive;
+            font-size: 2.3rem;
+            color: var(--deep-plum);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-weight: 300;
+            font-size: 1.05rem;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-soft);
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(155, 107, 158, 0.08);
+            border: 2px solid #ffffff;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 35px rgba(155, 107, 158, 0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            background: linear-gradient(135deg, #fff5f7 0%, #f3e8f5 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--accent-purple);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            color: var(--accent-purple);
+            font-weight: 400;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-title {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--deep-plum);
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        .product-bottom {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--deep-plum);
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--soft-pink);
+            padding: 5px 10px;
+            border-radius: var(--radius-pill);
+            border: 1px solid #f3dbe8;
+        }
+
+        .qty-btn {
+            border: none;
+            background: #fff;
+            color: var(--deep-plum);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--sweet-pink);
+            color: #fff;
+        }
+
+        /* Action Buttons */
+        .btn-checkout {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            margin: 3rem auto 0;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: var(--deep-plum);
+            border: 2px solid #ffffff;
+            border-radius: var(--radius-pill);
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 154, 158, 0.4);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(255, 154, 158, 0.5);
+        }
+
+        /* Page 2: Checkout Page */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid { grid-template-columns: 1fr; }
+        }
+
+        .checkout-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--radius-soft);
+            box-shadow: 0 12px 30px rgba(155, 107, 158, 0.08);
+            border: 2px solid #ffffff;
+        }
+
+        .checkout-card h2 {
+            font-family: 'Shantell Sans', cursive;
+            font-size: 1.35rem;
+            color: var(--deep-plum);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px dashed var(--pastel-purple);
+            padding-bottom: 0.8rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 2px dashed var(--sweet-pink);
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--deep-plum);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1.1rem;
+            border: 2px solid #f0e2ed;
+            border-radius: 16px;
+            outline: none;
+            transition: 0.3s;
+            background: var(--soft-pink);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--sweet-pink);
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255, 183, 197, 0.3);
+        }
+
+        .btn-back {
+            background: transparent;
+            color: var(--text-muted);
+            border: 2px solid #f0e2ed;
+            padding: 0.8rem 1.8rem;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .btn-back:hover {
+            background: var(--pastel-purple);
+            color: var(--deep-plum);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo"><i class="fa-solid fa-heart"></i> ALICE <span>Beauty</span></a>
+            <div class="cart-badge">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- หน้าที่ 1: รายการสินค้า -->
+        <section id="page-shop" class="page active">
+            <div class="section-title">
+                <h1>Sweet & Soft Collection</h1>
+                <p>เติมความสดใสและความหวานให้ผิวสวยของคุณด้วยไอเทมพรีเมียมจาก ALICE BEAUTY</p>
+            </div>
+
+            <div class="product-grid">
+                <!-- สินค้า 1 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-heart"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">Lip Balm & Gloss</span>
+                        <h3 class="product-title">Sweet Heart Lip Gloss</h3>
+                        <p class="product-desc">ลิปกลอสสีชมพูพีช ให้ความฉ่ำวาว ชุ่มชื้นยาวนานตลอดวัน</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿590</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(0, -1)">-</button>
+                                <span id="qty-0">0</span>
+                                <button class="qty-btn" onclick="updateQty(0, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- สินค้า 2 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-sparkles"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">Blush On</span>
+                        <h3 class="product-title">Soft Marshmallow Blush</h3>
+                        <p class="product-desc">บลัชออนเนื้อนุ่มละมุน โทนสีชมพูพาสเทล ให้แก้มระเรื่อเป็นธรรมชาติ</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿750</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(1, -1)">-</button>
+                                <span id="qty-1">0</span>
+                                <button class="qty-btn" onclick="updateQty(1, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- สินค้า 3 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">Eye Shadow</span>
+                        <h3 class="product-title">Dreamy Pastel Eye Palette</h3>
+                        <p class="product-desc">พาเลตต์อายแชโดว์ 9 เฉดสีหวาน พร้อมวิ้งค์ชิมเมอร์เนื้อละเอียด</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿1,290</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(2, -1)">-</button>
+                                <span id="qty-2">0</span>
+                                <button class="qty-btn" onclick="updateQty(2, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- สินค้า 4 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-cloud"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">Perfume Body Mist</span>
+                        <h3 class="product-title">Princess Cotton Candy Mist</h3>
+                        <p class="product-desc">สเปรย์น้ำหอมกลิ่นขนมหวานผสมดอกไม้ ละมุนละไม ติดทนนาน</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿980</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(3, -1)">-</button>
+                                <span id="qty-3">0</span>
+                                <button class="qty-btn" onclick="updateQty(3, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-checkout" onclick="goToCheckout()">ดำเนินการสั่งซื้อ <i class="fa-solid fa-arrow-right"></i></button>
+        </section>
+
+        <!-- หน้าที่ 2: สรุปรายการและชำระเงิน -->
+        <section id="page-checkout" class="page">
+            <div class="section-title">
+                <h1>Checkout Order</h1>
+                <p>สรุปรายการสั่งซื้อและกรอกข้อมูลจัดส่งสินค้า</p>
+            </div>
+
+            <div class="checkout-grid">
+                <!-- สรุปรายการ -->
+                <div class="checkout-card">
+                    <h2><i class="fa-solid fa-receipt"></i> สรุปรายการสินค้า</h2>
+                    <div id="checkout-items-list">
+                        <!-- รายการสินค้าจะขึ้นตรงนี้ -->
+                    </div>
+                    <div class="summary-total">
+                        <span>ยอดชำระทั้งหมด:</span>
+                        <span id="checkout-total-price">฿0</span>
+                    </div>
+                </div>
+
+                <!-- ฟอร์มจัดส่ง -->
+                <div class="checkout-card">
+                    <h2><i class="fa-solid fa-gift"></i> ข้อมูลจัดส่ง</h2>
+                    <form onsubmit="confirmOrder(event)">
+                        <div class="form-group">
+                            <label>ชื่อ-นามสกุล</label>
+                            <input type="text" placeholder="คุณอลิซ ใจดี" required>
+                        </div>
+                        <div class="form-group">
+                            <label>เบอร์โทรศัพท์</label>
+                            <input type="tel" placeholder="08X-XXX-XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ที่อยู่จัดส่ง</label>
+                            <textarea rows="3" placeholder="บ้านเลขที่, ถนน, แขวง/ตำบล..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-checkout" style="margin-top: 1rem; width: 100%; max-width: 100%;">ยืนยันการสั่งซื้อ</button>
+                        <button type="button" class="btn-back" onclick="goToShop()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับไปเลือกสินค้า</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const products = [
+            { id: 0, name: 'Sweet Heart Lip Gloss', price: 590 },
+            { id: 1, name: 'Soft Marshmallow Blush', price: 750 },
+            { id: 2, name: 'Dreamy Pastel Eye Palette', price: 1290 },
+            { id: 3, name: 'Princess Cotton Candy Mist', price: 980 }
+        ];
+
+        let cart = { 0: 0, 1: 0, 2: 0, 3: 0 };
+
+        function updateQty(index, change) {
+            if (cart[index] + change >= 0) {
+                cart[index] += change;
+                document.getElementById(`qty-${index}`).innerText = cart[index];
+                updateCartBadge();
+            }
+        }
+
+        function updateCartBadge() {
+            const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+            document.getElementById('cart-count').innerText = totalItems;
+        }
+
+        function goToCheckout() {
+            const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+            if (totalItems === 0) {
+                alert('กรุณาเลือกสินค้าอย่างน้อย 1 ชิ้นนะคะ');
+                return;
+            }
+
+            // แสดงรายการในหน้า 2
+            const itemsList = document.getElementById('checkout-items-list');
+            itemsList.innerHTML = '';
+            let totalPrice = 0;
+
+            products.forEach(p => {
+                const qty = cart[p.id];
+                if (qty > 0) {
+                    const itemTotal = p.price * qty;
+                    totalPrice += itemTotal;
+                    itemsList.innerHTML += `
+                        <div class="summary-item">
+                            <span>${p.name} x ${qty}</span>
+                            <span>฿${itemTotal.toLocaleString()}</span>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('checkout-total-price').innerText = `฿${totalPrice.toLocaleString()}`;
+
+            // สลับหน้า
+            document.getElementById('page-shop').classList.remove('active');
+            document.getElementById('page-checkout').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goToShop() {
+            document.getElementById('page-checkout').classList.remove('active');
+            document.getElementById('page-shop').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function confirmOrder(e) {
+            e.preventDefault();
+            alert('ขอบคุณสำหรับการสั่งซื้อนะคะ! ALICE BEAUTY ได้รับรายการเรียบร้อยแล้วค่ะ');
+            // รีเซ็ตตะกร้า
+            cart = { 0: 0, 1: 0, 2: 0, 3: 0 };
+            products.forEach(p => document.getElementById(`qty-${p.id}`).innerText = 0);
+            updateCartBadge();
+            goToShop();
+        }
+    </script>
+</body>
+</html>
