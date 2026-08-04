@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POOM SHOP | ร้านค้าออนไลน์พรีเมียม</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-main: #0f0f12;
+            --bg-card: #18181c;
+            --bg-glass: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary-accent: #ff8c00;
+            --primary-glow: rgba(255, 140, 0, 0.3);
+            --text-main: #f1f1f5;
+            --text-muted: #8a8a9e;
+            --badge-bg: #22222a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Kanit', sans-serif;
+            transition: all 0.25s ease;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 140, 0, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(138, 43, 226, 0.05) 0%, transparent 40%);
+        }
+
+        /* Navbar */
+        header {
+            background: rgba(15, 15, 18, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span { color: var(--primary-accent); }
+
+        .cart-trigger {
+            position: relative;
+            background: var(--badge-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-trigger:hover {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .cart-badge {
+            background: var(--primary-accent);
+            color: #000;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Container Layout */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Section View Management */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header Title */
+        .section-header {
+            margin-bottom: 30px;
+        }
+
+        .section-header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Product Grid (PAGE 1) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            background-color: #22222a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .product-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .product-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .price-tag {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .price-tag small {
+            font-size: 0.8rem;
+            color: var(--primary-accent);
+            margin-right: 2px;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            background: var(--badge-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            padding: 4px;
+        }
+
+        .btn-qty {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-qty:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .qty-input {
+            width: 32px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Action Bar Page 1 */
+        .bottom-action-bar {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff8c00, #e65c00);
+            color: #000;
+            font-weight: 600;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        /* Checkout Page (PAGE 2) */
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 32px;
+        }
+
+        @media (max-width: 850px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+        }
+
+        .card-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Summary Item Row */
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .summary-item:last-child { border-bottom: none; }
+
+        .item-details h4 {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .item-details p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .item-price {
+            font-weight: 600;
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--badge-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-accent);
+        }
+
+        /* Pricing Breakdown */
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .calc-row.grand-total {
+            color: var(--text-main);
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 16px;
+            margin-top: 16px;
+        }
+
+        .calc-row.grand-total span:last-child {
+            color: var(--primary-accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-main);
+            border-color: var(--text-main);
+        }
+
+        .checkout-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+        }
+
+        /* Status Empty */
+        .empty-cart-msg {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-bag-shopping"></i> POOM <span>SHOP</span>
+            </div>
+            <div class="cart-trigger" onclick="switchPage(2)">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span style="font-size: 0.9rem;">ตะกร้า</span>
+                <div class="cart-badge" id="nav-cart-count">0</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================= PAGE 1: PRODUCT LIST ================= -->
+        <section id="page-products" class="page-section active">
+            <div class="section-header">
+                <h1>รายการสินค้าแนะนำจาก POOM SHOP</h1>
+                <p>เลือกรายการสินค้าที่ต้องการสั่งซื้อ และปรับจำนวนได้ตามต้องการ</p>
+            </div>
+
+            <div class="product-grid" id="product-container">
+                <!-- Products dynamically rendered by JavaScript -->
+            </div>
+
+            <div class="bottom-action-bar">
+                <button class="btn-primary" onclick="switchPage(2)">
+                    ดำเนินการสรุปยอด <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 2: CHECKOUT & SUMMARY ================= -->
+        <section id="page-summary" class="page-section">
+            <div class="section-header">
+                <h1>สรุปรายการสั่งซื้อ</h1>
+                <p>ตรวจสอบรายการสินค้า ชำระเงิน และกรอกข้อมูลจัดส่ง</p>
+            </div>
+
+            <div class="checkout-layout">
+                <!-- Left Column: Item List & Shipping Info -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div class="card-panel">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-list-check" style="color: var(--primary-accent);"></i> สินค้าในตะกร้าของคุณ
+                        </div>
+                        <div id="summary-items-list">
+                            <!-- Items inserted dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="card-panel">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-truck" style="color: var(--primary-accent);"></i> ข้อมูลจัดส่ง
+                        </div>
+                        <div class="form-group">
+                            <label>ชื่อ-นามสกุล ผู้รับ</label>
+                            <input type="text" class="form-control" placeholder="สมชาย ใจดี">
+                        </div>
+                        <div class="form-group">
+                            <label>ที่อยู่จัดส่ง</label>
+                            <input type="text" class="form-control" placeholder="บ้านเลขที่, ถนน, แขวง/ตำบล, เขต/อำเภอ">
+                        </div>
+                        <div class="form-group">
+                            <label>เบอร์โทรศัพท์</label>
+                            <input type="tel" class="form-control" placeholder="08X-XXX-XXXX">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Financial Calculation -->
+                <div>
+                    <div class="card-panel" style="position: sticky; top: 100px;">
+                        <div class="panel-title">
+                            <i class="fa-solid fa-receipt" style="color: var(--primary-accent);"></i> สรุปยอดชำระ
+                        </div>
+
+                        <div class="calc-row">
+                            <span>จำนวนสินค้ารวม</span>
+                            <span id="summary-total-qty">0 ชิ้น</span>
+                        </div>
+                        <div class="calc-row">
+                            <span>รวมราคาสินค้า</span>
+                            <span id="summary-subtotal">฿0</span>
+                        </div>
+                        <div class="calc-row">
+                            <span>ค่าจัดส่งสินค้า (Express)</span>
+                            <span id="summary-shipping">฿0</span>
+                        </div>
+                        <div class="calc-row">
+                            <span>ส่วนลดพิเศษ</span>
+                            <span style="color: #2e7d32;">-฿0</span>
+                        </div>
+
+                        <div class="calc-row grand-total">
+                            <span>ยอดสุทธิ</span>
+                            <span id="summary-grand-total">฿0</span>
+                        </div>
+
+                        <div class="checkout-actions">
+                            <button class="btn-secondary" onclick="switchPage(1)">
+                                <i class="fa-solid fa-chevron-left"></i> เลือกเพิ่ม
+                            </button>
+                            <button class="btn-primary" onclick="processOrder()">
+                                ชำระเงิน <i class="fa-solid fa-lock"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Mock Database Items
+        const products = [
+            { id: 'p1', name: 'หูฟังไร้สาย Pro Wireless', desc: 'ระบบตัดเสียงรบกวน Active Noise Cancelling', price: 3590, icon: 'fa-headphones' },
+            { id: 'p2', name: 'นาฬิกา Smartwatch v2', desc: 'วัดอัตราการเต้นหัวใจ หน้าจอ AMOLED สว่างชัดเจน', price: 2890, icon: 'fa-stopwatch' },
+            { id: 'p3', name: 'คีย์บอร์ด Mechanical', desc: 'สวิตช์สัมผัสนุ่ม ไฟ RGB ปรับแต่งลุคได้อย่างอิสระ', price: 1990, icon: 'fa-keyboard' },
+            { id: 'p4', name: 'ลำโพงบลูทูธ Portable', desc: 'เสียงเบสแน่น กันน้ำระดับ IPX7 พกพาสะดวก', price: 1450, icon: 'fa-box' }
+        ];
+
+        // Store quantity per product ID { p1: 1, p2: 0, ... }
+        const cart = { p1: 0, p2: 0, p3: 0, p4: 0 };
+        const SHIPPING_FEE = 60;
+
+        // Render Product List
+        function renderProducts() {
+            const container = document.getElementById('product-container');
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fa-solid ${product.icon}"></i>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-desc">${product.desc}</div>
+                        <div class="product-footer">
+                            <div class="price-tag"><small>฿</small>${product.price.toLocaleString()}</div>
+                            <div class="qty-controls">
+                                <button class="btn-qty" onclick="changeQty('${product.id}', -1)">-</button>
+                                <input type="text" class="qty-input" id="input-${product.id}" value="${cart[product.id]}" readonly>
+                                <button class="btn-qty" onclick="changeQty('${product.id}', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Change Quantity Logic
+        function changeQty(productId, amount) {
+            let current = cart[productId] || 0;
+            current += amount;
+            if (current < 0) current = 0;
+            
+            cart[productId] = current;
+            document.getElementById(`input-${productId}`).value = current;
+            
+            updateCartState();
+        }
+
+        // Calculate Totals & Update Nav Badge
+        function updateCartState() {
+            let totalQty = 0;
+            for (let id in cart) {
+                totalQty += cart[id];
+            }
+            document.getElementById('nav-cart-count').innerText = totalQty;
+        }
+
+        // Switch Page View (SPA approach)
+        function switchPage(pageNumber) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            
+            if (pageNumber === 1) {
+                document.getElementById('page-products').classList.add('active');
+            } else if (pageNumber === 2) {
+                renderSummaryPage();
+                document.getElementById('page-summary').classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render Summary Page (Page 2)
+        function renderSummaryPage() {
+            const listContainer = document.getElementById('summary-items-list');
+            let subtotal = 0;
+            let totalQty = 0;
+            let hasItems = false;
+
+            let htmlList = '';
+
+            products.forEach(product => {
+                const qty = cart[product.id];
+                if (qty > 0) {
+                    hasItems = true;
+                    const itemTotal = qty * product.price;
+                    subtotal += itemTotal;
+                    totalQty += qty;
+
+                    htmlList += `
+                        <div class="summary-item">
+                            <div class="item-details">
+                                <h4>${product.name}</h4>
+                                <p>฿${product.price.toLocaleString()} x ${qty} ชิ้น</p>
+                            </div>
+                            <div class="item-price">฿${itemTotal.toLocaleString()}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (!hasItems) {
+                listContainer.innerHTML = `<div class="empty-cart-msg"><i class="fa-solid fa-basket-shopping" style="font-size: 2rem; margin-bottom: 8px;"></i><br>ไม่มีสินค้าในตะกร้า</div>`;
+            } else {
+                listContainer.innerHTML = htmlList;
+            }
+
+            const shipping = hasItems ? SHIPPING_FEE : 0;
+            const grandTotal = subtotal + shipping;
+
+            document.getElementById('summary-total-qty').innerText = `${totalQty} ชิ้น`;
+            document.getElementById('summary-subtotal').innerText = `฿${subtotal.toLocaleString()}`;
+            document.getElementById('summary-shipping').innerText = `฿${shipping.toLocaleString()}`;
+            document.getElementById('summary-grand-total').innerText = `฿${grandTotal.toLocaleString()}`;
+        }
+
+        // Action Order Submit
+        function processOrder() {
+            let totalQty = 0;
+            for (let id in cart) totalQty += cart[id];
+
+            if (totalQty === 0) {
+                alert('โปรดเลือกสินค้าอย่างน้อย 1 ชิ้นก่อนทำการชำระเงิน');
+                return;
+            }
+            alert('ขอบคุณสำหรับการสั่งซื้อจาก POOM SHOP! ระบบได้รับคำสั่งซื้อเรียบร้อยแล้ว');
+        }
+
+        // Initial Load
+        renderProducts();
+        updateCartState();
+    </script>
+</body>
+</html>
