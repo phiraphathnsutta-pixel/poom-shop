@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ดั้งแหมบ | ร้านน้ำหวานสดชื่น ชา กาแฟ นมสด</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&family=Itim&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #fdd835;
+            --primary-orange: #ff9800;
+            --soft-cream: #fffde7;
+            --sweet-pink: #ff80ab;
+            --bg-mint: #e8f5e9;
+            --text-brown: #4e342e;
+            --card-bg: #ffffff;
+            --radius-round: 20px;
+            --radius-pill: 50px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Mitr', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-mint);
+            color: var(--text-brown);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #ffe082, #ffb74d);
+            padding: 1.2rem 2rem;
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 4px solid #ffffff;
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Itim', cursive;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--text-brown);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: #d81b60;
+        }
+
+        .cart-badge {
+            background: #ffffff;
+            padding: 0.6rem 1.4rem;
+            border-radius: var(--radius-pill);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: var(--text-brown);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            font-weight: 500;
+        }
+
+        .cart-count {
+            background: var(--primary-orange);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: var(--radius-pill);
+            font-size: 0.9rem;
+        }
+
+        /* Container & Page Switch */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title h1 {
+            font-family: 'Itim', cursive;
+            font-size: 2.5rem;
+            color: var(--text-brown);
+            margin-bottom: 0.3rem;
+        }
+
+        .section-title p {
+            color: #6d4c41;
+            font-size: 1.05rem;
+            font-weight: 300;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-round);
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 3px solid #ffffff;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .product-img {
+            height: 190px;
+            background: linear-gradient(135deg, #fffde7 0%, #ffe0b2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            color: var(--primary-orange);
+        }
+
+        .product-info {
+            padding: 1.3rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: #8d6e63;
+            margin-bottom: 0.2rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            color: var(--text-brown);
+        }
+
+        .product-desc {
+            font-size: 0.88rem;
+            color: #795548;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        .product-bottom {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e65100;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff8e1;
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
+            border: 1px solid #ffe082;
+        }
+
+        .qty-btn {
+            border: none;
+            background: #fff;
+            color: var(--text-brown);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary-orange);
+            color: #fff;
+        }
+
+        /* Action Buttons */
+        .btn-checkout {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            margin: 2.5rem auto 0;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-pill);
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.35);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 152, 0, 0.45);
+        }
+
+        /* Page 2: Checkout Page */
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid { grid-template-columns: 1fr; }
+        }
+
+        .checkout-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--radius-round);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 3px solid #ffffff;
+        }
+
+        .checkout-card h2 {
+            font-family: 'Itim', cursive;
+            font-size: 1.5rem;
+            color: var(--text-brown);
+            margin-bottom: 1.2rem;
+            border-bottom: 2px dashed #ffe082;
+            padding-bottom: 0.6rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 2px dashed #ffb74d;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #e65100;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            color: #6d4c41;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #ffe082;
+            border-radius: 14px;
+            outline: none;
+            transition: 0.3s;
+            background: #fffde7;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-orange);
+            background: #fff;
+        }
+
+        .btn-back {
+            background: transparent;
+            color: #6d4c41;
+            border: 2px solid #ffe082;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 0.8rem;
+            width: 100%;
+        }
+
+        .btn-back:hover {
+            background: #fff8e1;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo"><i class="fa-solid fa-glass-water"></i> ดั้งแหมบ <span>Sweet & Drinks</span></a>
+            <div class="cart-badge">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- หน้าที่ 1: รายการน้ำหวาน -->
+        <section id="page-shop" class="page active">
+            <div class="section-title">
+                <h1>เมนูน้ำหวานสดชื่น ชา กาแฟ นมสด</h1>
+                <p>สูตรหวานเข้มข้น หอมมัน ชื่นใจ รสชาติกลมกล่อมทุกแก้วจากร้านดั้งแหมบ</p>
+            </div>
+
+            <div class="product-grid">
+                <!-- เมนู 1 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-mug-hot"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">ชาโบราณ</span>
+                        <h3 class="product-title">ชาไทยเย็นเข้มข้น</h3>
+                        <p class="product-desc">ชาไทยสูตรโบราณ หอมกลิ่นใบชาแท้ ราดนมสดหวานมันกลมกล่อม</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿45</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(0, -1)">-</button>
+                                <span id="qty-0">0</span>
+                                <button class="qty-btn" onclick="updateQty(0, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- เมนู 2 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-bottle-droplet"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">เมนูนมสด</span>
+                        <h3 class="product-title">นมสดสตรอว์เบอร์รี</h3>
+                        <p class="product-desc">นมสดแท้ 100% ผสมซอสสตรอว์เบอร์รีโฮมเมด หอมหวานอมเปรี้ยว</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿55</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(1, -1)">-</button>
+                                <span id="qty-1">0</span>
+                                <button class="qty-btn" onclick="updateQty(1, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- เมนู 3 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-whiskey-glass"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">เมนูโกโก้</span>
+                        <h3 class="product-title">โกโก้พรีเมียมเข้มข้น</h3>
+                        <p class="product-desc">โกโก้นำเข้าแท้ รสชาติเข้มข้นสะใจ หวานน้อยแต่หอมกลมกล่อม</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿50</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(2, -1)">-</button>
+                                <span id="qty-2">0</span>
+                                <button class="qty-btn" onclick="updateQty(2, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- เมนู 4 -->
+                <div class="product-card">
+                    <div class="product-img"><i class="fa-solid fa-wine-glass"></i></div>
+                    <div class="product-info">
+                        <span class="product-category">อิตาเลียนโซดา</span>
+                        <h3 class="product-title">บลูฮาวายโซดา</h3>
+                        <p class="product-desc">เปรี้ยวซ่าสดชื่น ดับร้อนได้ทันที เติมความสดชื่นยามบ่าย</p>
+                        <div class="product-bottom">
+                            <span class="product-price">฿40</span>
+                            <div class="qty-control">
+                                <button class="qty-btn" onclick="updateQty(3, -1)">-</button>
+                                <span id="qty-3">0</span>
+                                <button class="qty-btn" onclick="updateQty(3, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-checkout" onclick="goToCheckout()">สั่งซื้อน้ำหวาน <i class="fa-solid fa-arrow-right"></i></button>
+        </section>
+
+        <!-- หน้าที่ 2: สรุปรายการและชำระเงิน -->
+        <section id="page-checkout" class="page">
+            <div class="section-title">
+                <h1>สรุปรายการสั่งซื้อ</h1>
+                <p>ตรวจสอบเมนูน้ำหวานและกรอกที่อยู่จัดส่ง</p>
+            </div>
+
+            <div class="checkout-grid">
+                <!-- สรุปรายการ -->
+                <div class="checkout-card">
+                    <h2><i class="fa-solid fa-receipt"></i> รายการน้ำหวานที่เลือก</h2>
+                    <div id="checkout-items-list"></div>
+                    <div class="summary-total">
+                        <span>รวมทั้งสิ้น:</span>
+                        <span id="checkout-total-price">฿0</span>
+                    </div>
+                </div>
+
+                <!-- ฟอร์มจัดส่ง -->
+                <div class="checkout-card">
+                    <h2><i class="fa-solid fa-motorcycle"></i> ข้อมูลจัดส่ง (Delivery)</h2>
+                    <form onsubmit="confirmOrder(event)">
+                        <div class="form-group">
+                            <label>ชื่อผู้รับ</label>
+                            <input type="text" placeholder="คุณสมชาย สายหวาน" required>
+                        </div>
+                        <div class="form-group">
+                            <label>เบอร์โทรศัพท์</label>
+                            <input type="tel" placeholder="08X-XXX-XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ที่อยู่จัดส่ง / หมายเหตุ (เช่น ความหวาน %)</label>
+                            <textarea rows="3" placeholder="บ้านเลขที่, ถนน... (ระบุความหวาน เช่น หวานน้อย 50%)" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-checkout" style="margin-top: 1rem; width: 100%; max-width: 100%;">ยืนยันสั่งซื้อ</button>
+                        <button type="button" class="btn-back" onclick="goToShop()"><i class="fa-solid fa-arrow-left"></i> ย้อนกลับไปเลือกเมนูเพิ่ม</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const products = [
+            { id: 0, name: 'ชาไทยเย็นเข้มข้น', price: 45 },
+            { id: 1, name: 'นมสดสตรอว์เบอร์รี', price: 55 },
+            { id: 2, name: 'โกโก้พรีเมียมเข้มข้น', price: 50 },
+            { id: 3, name: 'บลูฮาวายโซดา', price: 40 }
+        ];
+
+        let cart = { 0: 0, 1: 0, 2: 0, 3: 0 };
+
+        function updateQty(index, change) {
+            if (cart[index] + change >= 0) {
+                cart[index] += change;
+                document.getElementById(`qty-${index}`).innerText = cart[index];
+                updateCartBadge();
+            }
+        }
+
+        function updateCartBadge() {
+            const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+            document.getElementById('cart-count').innerText = totalItems;
+        }
+
+        function goToCheckout() {
+            const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+            if (totalItems === 0) {
+                alert('กรุณาเลือกเมนูน้ำหวานอย่างน้อย 1 แก้วนะคะ');
+                return;
+            }
+
+            const itemsList = document.getElementById('checkout-items-list');
+            itemsList.innerHTML = '';
+            let totalPrice = 0;
+
+            products.forEach(p => {
+                const qty = cart[p.id];
+                if (qty > 0) {
+                    const itemTotal = p.price * qty;
+                    totalPrice += itemTotal;
+                    itemsList.innerHTML += `
+                        <div class="summary-item">
+                            <span>${p.name} x ${qty} แก้ว</span>
+                            <span>฿${itemTotal.toLocaleString()}</span>
+                        </div>
+                    `;
+                }
+            });
+
+            document.getElementById('checkout-total-price').innerText = `฿${totalPrice.toLocaleString()}`;
+
+            document.getElementById('page-shop').classList.remove('active');
+            document.getElementById('page-checkout').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goToShop() {
+            document.getElementById('page-checkout').classList.remove('active');
+            document.getElementById('page-shop').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function confirmOrder(e) {
+            e.preventDefault();
+            alert('ขอบคุณสำหรับการสั่งซื้อค่ะ! ร้านดั้งแหมบกำลังเตรียมน้ำหวานอร่อยๆ ส่งให้ตามที่อยู่นะคะ');
+            cart = { 0: 0, 1: 0, 2: 0, 3: 0 };
+            products.forEach(p => document.getElementById(`qty-${p.id}`).innerText = 0);
+            updateCartBadge();
+            goToShop();
+        }
+    </script>
+</body>
+</html>
